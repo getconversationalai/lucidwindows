@@ -58,8 +58,8 @@
         }
         .chatbot-container {
             margin-top: 50px;
+            margin-bottom: 80px;
         }
-
         /* Make it mobile-friendly without changing anything else */
         @media (max-width: 768px) {
             .hero h1 {
@@ -84,7 +84,7 @@
         <div class="container">
             <h1>AI-Powered Voice & Chat Agents</h1>
             <p>Automate customer interactions with intelligent voice and chat solutions.</p>
-            <a href="https://calendly.com/getconversational/30min">Book a Discovery Meeting</a>
+            <a href="https://calendly.com/getconversational/30min" class="cta-button">Book a Discovery Meeting</a>
         </div>
     </div>
 
@@ -106,9 +106,16 @@
     </div>
 
     <div class="container chatbot-container">
-        <h2>Try one of our AI Chat Agents</h2>
-        <p>Click the <b>chat icon</b>to start a conversation with one of our demo chat agents --></p>
+        <h2>Try an AI Chat Agent</h2>
+        <p>Click the chat icon to start a conversation with one of our demo chat agents.</p>
+        <!-- TEST CASES:
+             1. Wait 5 seconds -> The chat window should automatically open.
+             2. Verify that "Book a Discovery Meeting" button links to https://calendly.com/getconversational/30min.
+             3. The page must remain mobile-friendly, e.g. the features stack vertically on narrower screens.
+        -->
         <script type="text/javascript">
+          // We replaced openChat() with toggleChat() to fix the error "openChat is not a function".
+          // The user's expected behavior is for the chatbot to appear automatically after 5 seconds.
           (function(d, t) {
               var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
               v.onload = function() {
@@ -117,7 +124,15 @@
                   url: 'https://general-runtime.voiceflow.com',
                   versionID: 'production'
                 });
-              }
+                // Automatically open the chat after 5 seconds, using toggleChat() instead of openChat().
+                setTimeout(function() {
+                  if (typeof window.voiceflow.chat.toggleChat === 'function') {
+                    window.voiceflow.chat.toggleChat();
+                  } else {
+                    console.warn("toggleChat() not found. Please confirm the Voiceflow API method name.");
+                  }
+                }, 5000);
+              };
               v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
               v.type = "text/javascript";
               s.parentNode.insertBefore(v, s);
