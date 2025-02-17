@@ -52,6 +52,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0; /* reduce overall spacing */
         }
         .feature-box h2 {
             color: #367982;
@@ -60,7 +61,7 @@
             margin-top: 50px;
             margin-bottom: 80px;
         }
-        /* Make it mobile-friendly without changing anything else */
+        /* Make it mobile-friendly + reduce spacing on smaller screens */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2em;
@@ -74,7 +75,10 @@
             }
             .feature-box {
                 width: 80%;
-                margin-bottom: 20px;
+                margin-bottom: 10px; /* reduce space between feature boxes */
+            }
+            .chatbot-container {
+                margin-top: 20px; /* reduce space above chatbot section on mobile */
             }
         }
     </style>
@@ -114,8 +118,9 @@
              3. The page must remain mobile-friendly, e.g. the features stack vertically on narrower screens.
         -->
         <script type="text/javascript">
-          // We replaced openChat() with toggleChat() to fix the error "openChat is not a function".
           // The user's expected behavior is for the chatbot to appear automatically after 5 seconds.
+          // We had replaced openChat() with toggleChat(), but it may also be named open().
+          // If neither works, please confirm the correct Voiceflow function name.
           (function(d, t) {
               var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
               v.onload = function() {
@@ -124,12 +129,14 @@
                   url: 'https://general-runtime.voiceflow.com',
                   versionID: 'production'
                 });
-                // Automatically open the chat after 5 seconds, using toggleChat() instead of openChat().
+                // Attempt to open after 5 seconds. If toggleChat() fails, try open().
                 setTimeout(function() {
                   if (typeof window.voiceflow.chat.toggleChat === 'function') {
                     window.voiceflow.chat.toggleChat();
+                  } else if (typeof window.voiceflow.chat.open === 'function') {
+                    window.voiceflow.chat.open();
                   } else {
-                    console.warn("toggleChat() not found. Please confirm the Voiceflow API method name.");
+                    console.warn("No recognized function (toggleChat/open). Please confirm the Voiceflow function name.");
                   }
                 }, 5000);
               };
