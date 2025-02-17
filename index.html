@@ -59,6 +59,24 @@
         .chatbot-container {
             margin-top: 50px;
         }
+
+        /* Make it mobile-friendly without changing anything else */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero p {
+                font-size: 1.2em;
+            }
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            .feature-box {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -88,8 +106,8 @@
     </div>
 
     <div class="container chatbot-container">
-        <h2>Try an AI Chat Agent</h2>
-        <p>Click the chat icon to start a conversation with one of our demo chat agents.</p>
+        <h2>Try one of our AI Chat Agents</h2>
+        <p>Click the <b>chat icon</b>to start a conversation with one of our demo chat agents --></p>
         <script type="text/javascript">
           (function(d, t) {
               var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
